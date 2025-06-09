@@ -17,14 +17,14 @@ int main(void) {
     printf("> ");
     nread = getline(&line, &len, stdin);
     if (nread < 0) {
-      // EOF or error
+
       break;
     }
-    // Strip newline
+
     if (line[nread - 1] == '\n') {
       line[nread - 1] = '\0';
     }
-    // Optional: exit on empty or "exit"
+
     if (line[0] == '\0' || strcmp(line, "exit") == 0) {
       break;
     }
@@ -35,13 +35,12 @@ int main(void) {
       break;
     }
     if (pid == 0) {
-      // Child process: attempt to exec
+
       execl(line, line, (char *)NULL);
-      // If exec returns, it failed
+
       fprintf(stderr, "Exec failure\n");
       exit(1);
     } else {
-      // Parent process: wait for child
       if (waitpid(pid, &status, 0) < 0) {
         perror("waitpid");
       }
